@@ -1,5 +1,4 @@
 // set NODE_ENV to development unless it is set elsewhere
-// for production this is set via heroku config
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 // load the config file for the current environment
@@ -7,6 +6,7 @@ var config = require('./env/' + process.env.NODE_ENV);
 
 process.env.GATEWAY = config.gateway;
 
+// utility method for providing a link based on environment
 config.makeLocalLink = function(resource) {
   var gateway = config.gateway;
   var port = config.port;

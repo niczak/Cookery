@@ -1,34 +1,17 @@
+/* global console:false */
 class MainController {
-  constructor ($timeout, webDevTec, toastr) {
+  constructor (SearchService) {
     'ngInject';
-
-    this.awesomeThings = [];
-    this.classAnimation = '';
-    this.creationDate = 1442535822389;
-    this.toastr = toastr;
-
-    this.activate($timeout, webDevTec);
+    this.searchService = SearchService;
   }
 
-  activate($timeout, webDevTec) {
-    this.getWebDevTec(webDevTec);
-    $timeout(() => {
-      this.classAnimation = 'rubberBand';
-    }, 4000);
-  }
-
-  getWebDevTec(webDevTec) {
-    this.awesomeThings = webDevTec.getTec();
-
-    angular.forEach(this.awesomeThings, (awesomeThing) => {
-      awesomeThing.rank = Math.random();
-    });
-  }
-
-  showToastr() {
-    this.toastr.info('Fork <a href="https://github.com/Swiip/generator-gulp-angular" target="_blank"><b>generator-gulp-angular</b></a>');
-    this.classAnimation = '';
+  search() {
+    this.searchService
+      .search(this.searchTerm)
+      .then(response => {
+        this.items = JSON.stringify(response, null, "    ");
+      });
   }
 }
 
-export default MainController;
+export { MainController };

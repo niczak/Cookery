@@ -1,27 +1,19 @@
-var http = require('http');
-var express = require('express');
-var bodyParser = require('body-parser');
-var config = require('./src/server/config/config');
+'use strict';
+
+const http = require('http');
+const express = require('express');
+const bodyParser = require('body-parser');
+const config = require('./src/server/config/config');
+const searchObj = require('./src/server/services/search');
+const search = new searchObj.Search();
 
 var app = express();
-app.use(bodyParser.json());
 app.set('port', config.port);
+app.use(bodyParser.json());
+app.use(express.static(__dirname + '/dist'));
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(__dirname + '/dist'));
-  app.use('/favicon.ico', express.static(__dirname + '/dist/favicon.ico'));
-} else {
-  app.use(express.static(__dirname + '/src'));
-  app.use(express.static(__dirname + '/.tmp'));
-  app.use('/bower_components', express.static(__dirname + '/bower_components'));
-  app.use('/favicon.ico', express.static(__dirname + '/src/favicon.ico'));
-}
+// TODO: move to router file
+// see: http://expressjs.com/guide/routing.html
+app.get('/search/:term', search.doSearch);
 
-app.use('/', function(req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Cookery in da hizzy\n');
-});
-
-app.listen(app.get('port'), function () {
-  console.log('Running on ' + config.gateway + ':' + config.port);
-});
+app.listen(config.port, () => console.log('Running on ' + config.gateway + ':' + config.port));

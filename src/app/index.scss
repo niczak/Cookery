@@ -2,7 +2,6 @@
  *  If you want to override some bootstrap variables, you have to change values here.
  *  The list of variables are listed here bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap/_variables.scss
  */
-$navbar-inverse-link-color: #5AADBB;
 $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 
 /**
@@ -12,6 +11,8 @@ $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bo
 // bower:scss
 // endbower
 
+// TODO: divide up into scss files based on function
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -19,12 +20,13 @@ $icon-font-path: "../../bower_components/bootstrap-sass-official/assets/fonts/bo
   padding: 0.2em 0;
 }
 
-.thumbnail {
-  height: 200px;
+.content {
+  margin: 15px;
+}
 
-  img.pull-right {
-    width: 50px;
-  }
+.search-results {
+  font-family: monospace;
+  white-space: pre;
 }
 
 /**
