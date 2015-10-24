@@ -10,21 +10,26 @@ const f2fKey = config.f2fKey;
 class Search {
   doSearch (req, res) {
     const searchTerm = req.params.term;
+    console.log('searchTerm', searchTerm);
     const encodedTerm = encodeURIComponent(searchTerm);
     const options = {
-      host: f2fHost,
+      hostname: f2fHost,
       port: f2fPort,
-      path: `${f2fPath}?key=${f2fKey}&q=${encodedTerm}`,
-      method: 'GET'
+      path: `${f2fPath}?key=${f2fKey}&q=${encodedTerm}`
     };
 
-    http.request(options, function(f2fres) {
+    const f2freq = http.request(options, function(f2fres) {
       f2fres.setEncoding('utf8');
       f2fres.on('data', function(data) {
-        res.send(data);
+//        console.log('data', data);
+        res.write(data);
+      });
+      f2fres.on('end', function () {
+//        console.log('end of data');
+        res.end();
       });
     });
-    res.end();
+    f2freq.end();
   }
 }
 
